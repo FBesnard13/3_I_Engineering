@@ -1,9 +1,9 @@
-# Initialize the project ==========================================================================
+# Initialize the project ====
 
 source("C:/Users/fbesnard/OneDrive - Laitram/Ressources/R/R_Programs/Load_Libraries.R")
 
 
-# Import data ==========================================================================
+# Import data ====
 
 Capacity_Wehl_perEmp_perDate <-  read_csv("//prod/root/v_drive/team/Intralox Dashboard/Intralox EMEA Equipment Operations App/Francois/Data/0_Cleaned/R_Capacity_Wehl/Capacity_Wehl_perEmp_perDate.csv", name_repair = "minimal", show_col_types = F)
 Capacity_Wehl_Clean <-  read_csv("//prod/root/v_drive/team/Intralox Dashboard/Intralox EMEA Equipment Operations App/Francois/Data/0_Cleaned/R_Capacity_Wehl/Capacity_Wehl_Clean.csv", name_repair = "minimal", show_col_types = F)
@@ -11,13 +11,13 @@ Capacity_Wehl_Clean <-  read_csv("//prod/root/v_drive/team/Intralox Dashboard/In
 Dates_Ess_NL <-  read_csv("//prod/root/v_drive/team/Intralox Dashboard/Intralox EMEA Equipment Operations App/Francois/Data/0_Cleaned/Q_Dates/Dates_Ess_NL.csv", name_repair = "minimal", show_col_types = F)
 
 
-# Build Capacity_Wehl_perEmp_perDate_Flag  ==========================================================================
+# Build Capacity_Wehl_perEmp_perDate_Flag  ====
 
 # Extract next 3 weeks ----
-TodayDay <- as.Date(Sys.time())
-YearWeeksToKeep <- list(as.character(Dates_Ess_NL[Dates_Ess_NL$Date == as.Date(Sys.time()), 'Year_Week_ISO']), 
-                        as.character(Dates_Ess_NL[Dates_Ess_NL$Date == as.Date(Sys.time()) + 7, 'Year_Week_ISO']), 
-                        as.character(Dates_Ess_NL[Dates_Ess_NL$Date == as.Date(Sys.time()) + 14, 'Year_Week_ISO']))
+TodayDay <- Sys.Date()
+YearWeeksToKeep <- list(as.character(Dates_Ess_NL[Dates_Ess_NL$Date == Sys.Date(), 'Year_Week_ISO']), 
+                        as.character(Dates_Ess_NL[Dates_Ess_NL$Date == Sys.Date() + 7, 'Year_Week_ISO']), 
+                        as.character(Dates_Ess_NL[Dates_Ess_NL$Date == Sys.Date() + 14, 'Year_Week_ISO']))
 
 # Extract Working days for next 3 weeks ----
 Dates_Ess_NL <- Dates_Ess_NL %>% 
@@ -89,7 +89,7 @@ W1_TD <- TD[, c(16, 6:10)]
 W2_TD <- TD[, c(16, 11:15)]
 
 
-# Write CSV  ==========================================================================
+# Write CSV  ====
 
 write_excel_csv(W0_ATO, "//prod/root/v_drive/team/Intralox Dashboard/Intralox EMEA Equipment Operations App/Francois/Data/1_Complex Cleaning/E_Assembly/W0_ATO.csv")
 write_excel_csv(W1_ATO, "//prod/root/v_drive/team/Intralox Dashboard/Intralox EMEA Equipment Operations App/Francois/Data/1_Complex Cleaning/E_Assembly/W1_ATO.csv")

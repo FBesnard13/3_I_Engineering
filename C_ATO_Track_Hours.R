@@ -1,33 +1,33 @@
-# Initialize the project ==========================================================================
+# Initialize the project ====
 
 source("C:/Users/fbesnard/OneDrive - Laitram/Ressources/R/R_Programs/Load_Libraries.R")
 
 
-# Import data ==========================================================================
+# Import data ====
 
 Resources <- data.frame(read_csv("//prod/root/v_drive/team/Intralox Dashboard/Intralox EMEA Equipment Operations App/Francois/Noetix_V2/Resources_EMEA.csv", name_repair = "minimal", show_col_types = F))
 Jobs <- data.frame(read_csv("//prod/root/v_drive/team/Intralox Dashboard/Intralox EMEA Equipment Operations App/Francois/Noetix_V2/Jobs_EMEA.csv", name_repair = "minimal", show_col_types = F))
 
 
-# Select data: Keep only Amazon Programs ==========================================================================
+# Select data: Keep only Amazon Programs ====
 
 Jobs <- Jobs[!is.na(Jobs$Order_Line_Seiban_ID) & (grepl("ADTA", Jobs$Order_Line_Seiban_ID) | grepl("FS", Jobs$Order_Line_Seiban_ID)) & Jobs$Job_Status == "Closed" & !grepl("SPARE", Jobs$Order_Line_Seiban_ID), c('Job_ID', 'Order_Line_Seiban_ID', "Job_Status", "Job_Date_Closed", "Job_Qty_Completed", "Job_Item_Assembly_Description")]
 
 
-# Put all resources in min ==========================================================================
+# Put all resources in min ====
 
 Resources[Resources$Resource_Unit_Measure == "MIN", "Resource_Unit_Actual"] <- Resources[Resources$Resource_Unit_Measure == "MIN", "Resource_Unit_Actual"]/60
 Resources[Resources$Resource_Unit_Measure == "MIN", "Resource_Unit_Budgeted"] <- Resources[Resources$Resource_Unit_Measure == "MIN", "Resource_Unit_Budgeted"]/60
 Resources <- select(Resources, -Resource_Unit_Measure)
 
 
-# Merge resources & Jobs ==========================================================================
+# Merge resources & Jobs ====
 
 Resources <- merge(Resources, Jobs, by.x = "Job_ID", by.y = "Job_ID", all.y = T)
 Resources <- Resources[Resources$Resource_Unit_Actual > 0.1, c('Job_ID', "Resource_Department", "Resource_Unit_Actual", "Resource_Unit_Budgeted", "Order_Line_Seiban_ID", "Job_Date_Closed", "Job_Qty_Completed", "Job_Item_Assembly_Description")]
 
 
-# Format as date & Create Year_Month ==========================================================================
+# Format as date & Create Year_Month ====
 
 Resources$Job_Date_Closed <- gsub( " .*$", "", Resources$Job_Date_Closed)
 Resources$Job_Date_Closed <- as.Date(Resources$Job_Date_Closed, "%m/%d/%Y")
@@ -37,7 +37,7 @@ Resources[Resources$YearMonth < 10, "YearMonth"] <- paste("0", Resources[Resourc
 Resources$YearMonth <- paste(substr(year(Resources$Job_Date_Closed), 3, 4), Resources$YearMonth, sep = "_")
 
 
-# Create columns Program & Module ==========================================================================
+# Create columns Program & Module ====
 
 Resources$Program <- NA
 Resources[grepl("ADTA", Resources$Order_Line_Seiban_ID), "Program"] <- "ADTA-2023"
@@ -79,7 +79,7 @@ Resources[Resources$Job_Item_Assembly_Description == "MODULE RNR ASSEMBLY", "Mod
 Resources[Resources$Job_Item_Assembly_Description == "MODULE RNR ASSEMBLY, WITH HARDWARE", "Module"] <- "RNR Pre-Assembly"
 
 
-# Create summarized table ==========================================================================
+# Create summarized table ====
 
 test <- Resources[, c("Resource_Unit_Actual", "Job_Qty_Completed", "YearMonth", "Program", "Module")]
 test$groupedVar <- paste(test$YearMonth, test$Program, test$Module, sep = "_")
@@ -108,12 +108,12 @@ for (i in 1:nrow(test)){
 Resources_Sumarized <- Resources_Sumarized[, c("Resource_Unit_Actual", "Job_Qty_Completed", "YearMonth", "Program", "Module")]
 
 
-# Add Average Nr of Hrs by module ==========================================================================
+# Add Average Nr of Hrs by module ====
 
 Resources_Sumarized$AvrgNrHrsbyModule <- Resources_Sumarized$Resource_Unit_Actual / Resources_Sumarized$Job_Qty_Completed
 
 
-# CSV Clean ==========================================================================
+# CSV Clean ====
 
 Resources <- Resources %>%  mutate_all(as.character)
 Resources[is.na(Resources)] <- ""
@@ -122,7 +122,7 @@ Resources_Sumarized <- Resources_Sumarized %>%  mutate_all(as.character)
 Resources_Sumarized[is.na(Resources_Sumarized)] <- ""
 
 
-# Extract csv files ==========================================================================
+# Extract csv files ====
 
 #In Oracle App
 write_csv(Resources_Sumarized, "//prod/root/v_drive/team/Intralox Dashboard/Intralox EMEA Equipment Operations App/Francois/Data/1_Complex Cleaning/E_Assembly/AmazonProgram_Resources_Sumarized.csv")
