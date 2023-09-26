@@ -5,10 +5,10 @@ source("C:/Users/fbesnard/OneDrive - Laitram/Ressources/R/R_Programs/Load_Librar
 
 # Import data ====
 
-Capacity_Wehl_perEmp_perDate <-  read_csv("//prod/root/v_drive/team/Intralox Dashboard/Intralox EMEA Equipment Operations App/Francois/Data/0_Cleaned/R_Capacity_Wehl/Capacity_Wehl_perEmp_perDate.csv", name_repair = "minimal", show_col_types = F)
-Capacity_Wehl_Clean <-  read_csv("//prod/root/v_drive/team/Intralox Dashboard/Intralox EMEA Equipment Operations App/Francois/Data/0_Cleaned/R_Capacity_Wehl/Capacity_Wehl_Clean.csv", name_repair = "minimal", show_col_types = F)
+Capacity_Wehl_perEmp_perDate <-  read_parquet("//prod/root/v_drive/team/Intralox Dashboard/Intralox EMEA Equipment Operations App/Francois/Data/0_Cleaned/R_Capacity_Wehl/Capacity_Wehl_perEmp_perDate.parquet", name_repair = "minimal", show_col_types = F)
+Capacity_Wehl_Clean <-  read_parquet("//prod/root/v_drive/team/Intralox Dashboard/Intralox EMEA Equipment Operations App/Francois/Data/0_Cleaned/R_Capacity_Wehl/Capacity_Wehl_Clean.parquet", name_repair = "minimal", show_col_types = F)
 
-Dates_Ess_NL <-  read_csv("//prod/root/v_drive/team/Intralox Dashboard/Intralox EMEA Equipment Operations App/Francois/Data/0_Cleaned/Q_Dates/Dates_Ess_NL.csv", name_repair = "minimal", show_col_types = F)
+Dates_Ess_NL <-  read_parquet("//prod/root/v_drive/team/Intralox Dashboard/Intralox EMEA Equipment Operations App/Francois/Data/0_Cleaned/Q_Dates/Dates_Ess_NL.parquet", name_repair = "minimal", show_col_types = F)
 
 
 # Build Capacity_Wehl_perEmp_perDate_Flag  ====
@@ -91,17 +91,29 @@ W2_TD <- TD[, c(16, 11:15)]
 
 # Write CSV  ====
 
-write_excel_csv(W0_ATO, "//prod/root/v_drive/team/Intralox Dashboard/Intralox EMEA Equipment Operations App/Francois/Data/1_Complex Cleaning/E_Assembly/W0_ATO.csv")
-write_excel_csv(W1_ATO, "//prod/root/v_drive/team/Intralox Dashboard/Intralox EMEA Equipment Operations App/Francois/Data/1_Complex Cleaning/E_Assembly/W1_ATO.csv")
-write_excel_csv(W2_ATO, "//prod/root/v_drive/team/Intralox Dashboard/Intralox EMEA Equipment Operations App/Francois/Data/1_Complex Cleaning/E_Assembly/W2_ATO.csv")
+write_parquet(W0_ATO, "//prod/root/v_drive/team/Intralox Dashboard/Intralox EMEA Equipment Operations App/Francois/Data/1_Complex Cleaning/E_Assembly/W0_ATO.parquet")
+write_parquet(W1_ATO, "//prod/root/v_drive/team/Intralox Dashboard/Intralox EMEA Equipment Operations App/Francois/Data/1_Complex Cleaning/E_Assembly/W1_ATO.parquet")
+write_parquet(W2_ATO, "//prod/root/v_drive/team/Intralox Dashboard/Intralox EMEA Equipment Operations App/Francois/Data/1_Complex Cleaning/E_Assembly/W2_ATO.parquet")
 
-write_excel_csv(W0_ETO, "//prod/root/v_drive/team/Intralox Dashboard/Intralox EMEA Equipment Operations App/Francois/Data/1_Complex Cleaning/E_Assembly/W0_ETO.csv")
-write_excel_csv(W1_ETO, "//prod/root/v_drive/team/Intralox Dashboard/Intralox EMEA Equipment Operations App/Francois/Data/1_Complex Cleaning/E_Assembly/W1_ETO.csv")
-write_excel_csv(W2_ETO, "//prod/root/v_drive/team/Intralox Dashboard/Intralox EMEA Equipment Operations App/Francois/Data/1_Complex Cleaning/E_Assembly/W2_ETO.csv")
+write_parquet(W0_ETO, "//prod/root/v_drive/team/Intralox Dashboard/Intralox EMEA Equipment Operations App/Francois/Data/1_Complex Cleaning/E_Assembly/W0_ETO.parquet")
+write_parquet(W1_ETO, "//prod/root/v_drive/team/Intralox Dashboard/Intralox EMEA Equipment Operations App/Francois/Data/1_Complex Cleaning/E_Assembly/W1_ETO.parquet")
+write_parquet(W2_ETO, "//prod/root/v_drive/team/Intralox Dashboard/Intralox EMEA Equipment Operations App/Francois/Data/1_Complex Cleaning/E_Assembly/W2_ETO.parquet")
 
-write_excel_csv(W0_TD, "//prod/root/v_drive/team/Intralox Dashboard/Intralox EMEA Equipment Operations App/Francois/Data/1_Complex Cleaning/E_Assembly/W0_TD.csv")
-write_excel_csv(W1_TD, "//prod/root/v_drive/team/Intralox Dashboard/Intralox EMEA Equipment Operations App/Francois/Data/1_Complex Cleaning/E_Assembly/W1_TD.csv")
-write_excel_csv(W2_TD, "//prod/root/v_drive/team/Intralox Dashboard/Intralox EMEA Equipment Operations App/Francois/Data/1_Complex Cleaning/E_Assembly/W2_TD.csv")
+write_parquet(W0_TD, "//prod/root/v_drive/team/Intralox Dashboard/Intralox EMEA Equipment Operations App/Francois/Data/1_Complex Cleaning/E_Assembly/W0_TD.parquet")
+write_parquet(W1_TD, "//prod/root/v_drive/team/Intralox Dashboard/Intralox EMEA Equipment Operations App/Francois/Data/1_Complex Cleaning/E_Assembly/W1_TD.parquet")
+write_parquet(W2_TD, "//prod/root/v_drive/team/Intralox Dashboard/Intralox EMEA Equipment Operations App/Francois/Data/1_Complex Cleaning/E_Assembly/W2_TD.parquet")
+
+
+# Print ====
+
+print("3_E_Assembly_A")  
+
+
+
+
+
+
+
 
 
 
