@@ -1,6 +1,6 @@
 # Initialize the project ====
 
-source("C:/Users/fbesnard/OneDrive - Laitram/R/9_Set_Up/Load_Libraries.R")
+source("C:/Users/fbesnard/Documents/.Rprofile")
 
 
 # Import data ====

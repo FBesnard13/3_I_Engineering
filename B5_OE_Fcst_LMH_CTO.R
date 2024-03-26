@@ -1,6 +1,6 @@
 # Initialize the project ====
 
-source("C:/Users/fbesnard/OneDrive - Laitram/R/9_Set_Up/Load_Libraries.R")
+source("C:/Users/fbesnard/Documents/.Rprofile")
 
 
 # Set Up Parameters ====
@@ -62,11 +62,7 @@ LMH_CTO_Fcst_Cons <- LMH_CTO_Fcst_Cons |>
 LMH_CTO_Fcst_Spec_Calc <- LMH_Opps_Spec |> 
   merge(TCS_Ass_Fcst, by.x = 'Opp_TCS_ID', by.y = 'GD_Quotation_number') |> 
   filter(str_detect(GD_Product_name_Internal, 'CTO')) |> 
-  mutate(Fcst_Hrs_Opt = case_when(
-    GD_Belt_serie == 'S400' ~ 0,
-    GD_Belt_serie == 'S4500' ~ 0,
-    GD_Belt_serie == 'S7000' ~ Spec_S7000_Fix + (Spec_S7000_BH * TP_Assembly_Total_Hrs),
-    .default = 0)) |> 
+  mutate(Fcst_Hrs_Opt = EMEA_OE_Budjeted_Hrs) |> 
   mutate(Fcst_Hrs_Real = Fcst_Hrs_Opt * Opp_Prob) |> 
   select(Opp_Ship_Date, Fcst_Hrs_Real, Fcst_Hrs_Opt) |> 
   filter(Opp_Ship_Date >= min(LMH_CTO_Fcst_Cons$Date)) |> 

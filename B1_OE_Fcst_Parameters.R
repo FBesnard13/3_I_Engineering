@@ -14,9 +14,9 @@
   # Spec_S4500_BH = 1.072 #TCS Budgeted Hours
   # Spec_S4500_CP = 1.243 #Customization points
   # Spec_S4500_SP = 0.0531 #Sales Price
-  
-  Spec_S7000_Fix = 19.63 #Fixed amount of hours
-  Spec_S7000_BH = 0.6618 #TCS Budgeted Hours
+  # 
+  # Spec_S7000_Fix = 19.63 #Fixed amount of hours
+  # Spec_S7000_BH = 0.6618 #TCS Budgeted Hours
 
 
 
